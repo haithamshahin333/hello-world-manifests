@@ -2,7 +2,7 @@
 
 This repo has instructions for how to deploy a basic GitOps Workflow. The following diagram outlines what will be built and deployed:
 
-![GitOps Diagram](../assets/gitops-azure.png)
+![GitOps Diagram](./assets/gitops-azure.png)
 
 This repo also functions as a manifest repo. In a GitOps CI/CD model, this repo acts as the single source of truth for everything that should be deployed in the cluster.
 
@@ -35,21 +35,21 @@ The focus on this demo will be about deploying a basic GitOps workflow, and ther
 
 1. Select at the top right of the screen after logging in to GitHub the "Import Repository" button:
 
-    ![import repo](../assets/github-import-repo.png)
+    ![import repo](./assets/github-import-repo.png)
 
 2. Copy the GitHub link `https://github.com/haithamshahin333/express-node-hello-world-app.git` into the import form and create a private repo with any name:
 
-    ![import repo form](../assets/github-import-repo-form.png)
+    ![import repo form](./assets/github-import-repo-form.png)
 
 ### Import this repo, known as the [Manifests Repo](https://github.com/haithamshahin333/hello-world-manifests.git), into your own private repo for you to work through for this demo.
 
 1. Select at the top right of the screen after logging in the "Import Repository" button:
 
-    ![import repo](../assets/github-import-repo.png)
+    ![import repo](./assets/github-import-repo.png)
 
 2. Copy the GitHub link `https://github.com/haithamshahin333/hello-world-manifests.git` into the import form and create a private repo with any name:
 
-    ![import repo form](../assets/github-import-repo-form-manifests-repo.png)
+    ![import repo form](./assets/github-import-repo-form-manifests-repo.png)
 
 ### Generate a Personal Access Token [PAT](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token) to allow Argo CD and the GitHub Actions workflow to read/write from your personal private repositories.
 
@@ -57,7 +57,7 @@ The focus on this demo will be about deploying a basic GitOps workflow, and ther
 
 2. Be sure to only select the repo scope for permissions:
 
-    ![personal access token](../assets/github-pat.png)
+    ![personal access token](./assets/github-pat.png)
 
 3. Save the token in a local file for later use. Once the screen is refreshed, you will no longer be able to view the token value. If needed, you can always delete the old token and create a new one.
 
@@ -103,7 +103,7 @@ The focus on this demo will be about deploying a basic GitOps workflow, and ther
 
 1. Go to your private app repo and select 'settings' and then the 'secrets' tab:
 
-    ![github secrets tab](../assets/github-secrets-tab.png)
+    ![github secrets tab](./assets/github-secrets-tab.png)
 
 2. Add the following secrets. These will be used from your GitHub actions workflow:
 
@@ -113,11 +113,11 @@ The focus on this demo will be about deploying a basic GitOps workflow, and ther
     - `SP_USERNAME`: This is the ID of the service prinicpal (run `az ad sp show --id http://$SERVICE_PRINCIPAL_NAME --query appId --output tsv` to get the value - check your .env for the service principal name)
     - `SP_PASSWORD`: this is the password for the service principal (run `echo $SP_PASSWD` to get the value). If you are unable to get the password value from `$SP_PASSWD`, then run the following command to generate a new password for the service principal: `az ad sp credential reset --name $SP_USERNAME`.
 
-    ![github actions secrets](../assets/github-actions-secrets.png)
+    ![github actions secrets](./assets/github-actions-secrets.png)
 
 3. Run the workflow manually to push an image to your ACR instance by clicking 'Actions', then 'CI', and then 'Run worklow' on branch main:
 
-    ![github actions manual](../assets/github-actions-manual.png)
+    ![github actions manual](./assets/github-actions-manual.png)
 
     > Once this workflow completes, validate in the Azure Portal that there is a hello-world repository in your ACR instance.
 
@@ -154,7 +154,7 @@ The focus on this demo will be about deploying a basic GitOps workflow, and ther
 
 3. Accept the self-signed cert and login by using the credentials obtained in step 1. You should then see the following dashboard, and Argo has already synced and deployed the hello-world app to the cluster in the hello-world namepsace:
 
-    ![argo dashboard](../assets/argo-dashboard.png)
+    ![argo dashboard](./assets/argo-dashboard.png)
 
 4. View the deployed hello-world app by running the following command to get the External-IP:
 
@@ -168,19 +168,19 @@ The focus on this demo will be about deploying a basic GitOps workflow, and ther
 
 2. Click on `index.js` and then select the pencil icon to edit the file directly from the UI:
 
-    ![edit file](../assets/github-edit-file.png)
+    ![edit file](./assets/github-edit-file.png)
 
 3. Update the `MESSAGE` variable to `"Hello World with GitOps!"` and scroll down and select 'Commit changes'.
 
 4. You should now see an orange circle next to the commit hash, indicating that the GitHub actions workflow is running. This workflow will build the container image and then make a commit directly to your private manifest repo to update the app-manifests to point to the newest version of the image pushed to ACR:
 
-    ![running workflow](../assets/github-actions-workflow-running.png)
+    ![running workflow](./assets/github-actions-workflow-running.png)
 
 5. If all works, that indicator will become a green checkmark. From there, Argo within the next few minutes will sync the changes automatically to the cluster, which will deploy the new version of the hello-world image. Refresh the Hello World IP to view the changes.
 
 6. Additionally, in the Argo UI, click on the hello-world-kustomize app and then select 'App Details' at the top left. You'll see status there shows the git commit that has been synced - it should match the last commit that was made on your manifest repo since this is what Argo is monitoring:
 
-    ![sync status](../assets/argo-status-sync.png)
+    ![sync status](./assets/argo-status-sync.png)
 
 ## Tear Down Deployment
 
