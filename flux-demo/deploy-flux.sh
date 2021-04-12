@@ -13,7 +13,9 @@ flux bootstrap github \
 kubectl create namespace hello-world
 
 # Clone the private manifest repo to your local machine and commit the Flux Kustomization file for the hello-world app
-git clone https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/${GITHUB_USER}/${REPO_MANIFEST_NAME} --bare
+mkdir repo && cd ./repo
+
+git clone https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/${GITHUB_USER}/${REPO_MANIFEST_NAME}
 
 flux create kustomization hello-world \
     --source=flux-system \
@@ -27,4 +29,5 @@ cd ./${REPO_MANIFEST_NAME}
 git add .
 git commit -m "kustomization file for hello-world"
 git push
+cd ..
 cd ..
