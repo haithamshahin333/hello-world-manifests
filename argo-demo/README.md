@@ -2,7 +2,7 @@
 
 This repo has instructions for how to deploy a basic GitOps Workflow. The following diagram outlines what will be built and deployed:
 
-![GitOps Diagram](./assets/gitops-azure.png)
+![GitOps Diagram](./assets/gitops-argo-architecture.png)
 
 This repo also functions as a manifest repo. In a GitOps CI/CD model, this repo acts as the single source of truth for everything that should be deployed in the cluster.
 
