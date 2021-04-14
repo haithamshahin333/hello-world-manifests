@@ -1,0 +1,6 @@
+deploy_key
+*.pub
+*.yaml
+.env
+
+./repo
